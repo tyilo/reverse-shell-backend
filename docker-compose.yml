@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    image: tyilo/reverse-shell-backend
+    restart: always
+    networks:
+      - traefik
+      - default
+    ports:
+      - "62300-62325:62300-62325"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api-rs-tyilo-com.rule=Host(`api.rs.tyilo.com`)
+      - traefik.http.services.api-rs-tyilo-com.loadbalancer.server.port=4000
+
+networks:
+  traefik:
+    external: true

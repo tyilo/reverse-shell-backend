@@ -1,0 +1,8 @@
+/.git/
+/.pre-commit-config.yaml
+/Dockerfile
+/docker-compose.yml
+
+# From .gitignore:
+/node_modules/
+/build/
