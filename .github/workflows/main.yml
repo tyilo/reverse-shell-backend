@@ -1,0 +1,29 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Pull existing images
+        run: docker-compose pull
+
+      - name: Restore docker layer cache
+        uses: satackey/action-docker-layer-caching@v0.0.8
+        continue-on-error: true
+
+      - name: Build image
+        run: docker-compose build
+
+      - name: Deploy image to production
+        run: curl --fail -X POST "$WEBHOOK_URL"
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
