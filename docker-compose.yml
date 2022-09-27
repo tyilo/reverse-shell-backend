@@ -2,7 +2,6 @@ version: "3.7"
 
 services:
   app:
-    build: .
     image: ghcr.io/tyilo/reverse-shell-backend
     restart: always
     networks:
