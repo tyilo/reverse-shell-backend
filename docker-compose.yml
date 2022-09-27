@@ -3,7 +3,7 @@ version: "3.7"
 services:
   app:
     build: .
-    image: tyilo/reverse-shell-backend
+    image: ghcr.io/tyilo/reverse-shell-backend
     restart: always
     networks:
       - traefik
