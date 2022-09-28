@@ -1,4 +1,5 @@
 import * as net from "net";
+import * as dns from "dns";
 import * as process from "process";
 import { Server, Socket } from "socket.io";
 import * as uuid from "uuid";
@@ -12,7 +13,12 @@ const SOCKET_IO_PORT = 4000;
 const TCP_CONNECT_TIMEOUT = 10 * 60 * 1000;
 
 const LOOPBACK_ADDRESS = "0.0.0.0";
-const SERVER_ADDRESS = PRODUCTION ? "62.171.142.217" : "127.0.0.1";
+let SERVER_ADDRESS = "127.0.0.1";
+if (PRODUCTION) {
+  dns.promises.resolve4("api.rs.tyilo.com").then((addresses) => {
+    SERVER_ADDRESS = addresses[0];
+  });
+}
 const IO_OPTIONS = PRODUCTION
   ? {
       cors: {
